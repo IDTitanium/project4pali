@@ -27,14 +27,14 @@ app.post('/', function(request, response){
 	let ids = mealId.split(" ")
 	let mealArr = []
 
-	for(i=0;i<=id.length;i++){
+	for(i=0;i<=ids.length;i++){
 		let id = ids[i]
 	let url = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=' +id;
   	fetch(url)
   	.then(resp => resp.json())
   	.then(function(data){
   		mealRecipes = data;
-  		mealArr.push(mealRecipes.meals)
+  		mealArr.push(mealRecipes.meals[i])
   	})
 	}
 
@@ -42,10 +42,11 @@ app.post('/', function(request, response){
 		let len = mealArr.length
 		let ingLenArr = []
 	for(i=0;i<=len;i++){
-		
+		if(mealArr.strIngredient+i != 'null' && mealArr.strIngredient+i != '')
+		ingLenArr.push(mealArr.strIngredient+i)
 	}
 
-	return ingLenArr
+	return Number.max(ingLenArr)
 	}
 	
 });
